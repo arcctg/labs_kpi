@@ -1,0 +1,91 @@
+@startuml
+skinparam linetype ortho
+
+title Hospital Management System ERD
+
+entity "Patient" as patient {
+  * patient_id : int <<PK>>
+  --
+  first_name : String
+  last_name : String
+  date_of_birth : LocalDate
+  gender : String
+  contact_number : String
+  address : String
+}
+
+entity "MedicalRecord" as record {
+  * record_id : int <<PK>>
+  --
+  * patient_id : int <<FK>>
+  date_created : LocalDateTime
+  blood_type : String
+  allergies : String
+}
+
+entity "Department" as department {
+  * department_id : int <<PK>>
+  --
+  name : String
+  location : String
+}
+
+entity "Doctor" as doctor {
+  * doctor_id : int <<PK>>
+  --
+  * department_id : int <<FK>>
+  first_name : String
+  last_name : String
+  specialization : String
+  schedule : String
+  hire_date : LocalDate
+}
+
+entity "Appointment" as appointment {
+  * appointment_id : int <<PK>>
+  --
+  * patient_id : int <<FK>>
+  * doctor_id : int <<FK>>
+  appointment_date : LocalDateTime
+  status : String
+  reason : String
+}
+
+entity "Treatment" as treatment {
+  * treatment_id : int <<PK>>
+  --
+  * record_id : int <<FK>>
+  * doctor_id : int <<FK>>
+  treatment_date : LocalDate
+  diagnosis : String
+  description : String
+}
+
+entity "Medication" as medication {
+  * medication_id : int <<PK>>
+  --
+  name : String
+  description : String
+}
+
+entity "Prescription" as prescription {
+  * treatment_id : int <<PK>> <<FK>>
+  * medication_id : int <<PK>> <<FK>>
+  --
+  dosage : String
+  frequency : String
+  duration : String
+}
+
+patient ||--|| record : "has"
+
+department ||--o{ doctor : "employs"
+patient ||--o{ appointment : "schedules"
+doctor ||--o{ appointment : "has"
+record ||--o{ treatment : "contains"
+doctor ||--o{ treatment : "administers"
+
+treatment ||--o{ prescription : "includes"
+medication ||--o{ prescription : "is part of"
+
+@enduml
