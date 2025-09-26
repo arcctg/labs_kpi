@@ -1,5 +1,4 @@
 @startuml
-skinparam linetype ortho
 
 title Hospital Management System ERD
 
@@ -46,7 +45,7 @@ entity "Appointment" as appointment {
   --
   * patient_id : int <<FK>>
   * doctor_id : int <<FK>>
-  appointment_date : LocalDateTime
+  date : LocalDateTime
   status : String
   reason : String
 }
@@ -55,10 +54,16 @@ entity "Treatment" as treatment {
   * treatment_id : int <<PK>>
   --
   * record_id : int <<FK>>
-  * doctor_id : int <<FK>>
-  treatment_date : LocalDate
+  date : LocalDate
   diagnosis : String
   description : String
+}
+
+entity "MedicalTeam" as medical_team {
+  * doctor_id : int <<PK>> <<FK>>
+  * treatment_id : int <<PK>> <<FK>>
+  --
+  role : String
 }
 
 entity "Medication" as medication {
@@ -83,7 +88,9 @@ department ||--o{ doctor : "employs"
 patient ||--o{ appointment : "schedules"
 doctor ||--o{ appointment : "has"
 record ||--o{ treatment : "contains"
-doctor ||--o{ treatment : "administers"
+
+doctor ||--o{ medical_team : "is part of"
+treatment ||--|{ medical_team : "is managed by"
 
 treatment ||--o{ prescription : "includes"
 medication ||--o{ prescription : "is part of"
