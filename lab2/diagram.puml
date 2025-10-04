@@ -1,0 +1,10 @@
+@startuml
+title Hospital Management System - Use Case Diagram
+
+left to right direction
+
+actor "Patient" as patient
+actor "Doctor" as doctor
+
+
+@enduml
