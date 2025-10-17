@@ -1,10 +1,81 @@
 @startuml
-title Hospital Management System - Use Case Diagram
+actor Patient
+actor Doctor
 
-left to right direction
+rectangle "Hospital System" {
+    usecase Auth as "Authentication"
+    usecase AuthPatient as "Complete via Patient UI"
+    usecase AuthDoctor as "Complete via Doctor UI"
 
-actor "Patient" as patient
-actor "Doctor" as doctor
+    usecase SchedApp as "Schedule Appointment"
+    usecase SchedP as "Schedule via Patient UI"
+    usecase SchedD as "Schedule via Doctor UI"
+    usecase CancelApp as "Cancel Appointment"
+    usecase CancelP as "Cancel via Patient UI"
+    usecase CancelD as "Cancel via Doctor UI"
+    usecase ViewAppSched as "View Appointment Schedule"
+    usecase ViewSchedP as "View via Patient UI"
+    usecase ViewSchedD as "View via Doctor UI"
+    usecase Hours as "Provide Working Hours"
+    usecase ViewMR as "View Medical Record"
+    usecase ViewMRP as "View via Patient UI"
+    usecase ViewMRD as "View via Doctor UI"
+    usecase UpdateMR as "Update Medical Record"
 
+    Auth <|-- AuthPatient : Extends
+    Auth <|-- AuthDoctor : Extends
+    CancelApp <|-- CancelP : Extends
+    CancelApp <|-- CancelD : Extends
+    SchedApp <|-- SchedP : Extends
+    SchedApp <|-- SchedD : Extends
+    ViewAppSched <|-- ViewSchedD : Extends
+    ViewAppSched <|-- ViewSchedP : Extends
+    ViewMR <|-- ViewMRD : Extends
+    ViewMR <|-- ViewMRP : Extends
 
+    usecase Diag as "Diagnose Patient"
+    usecase CreateTP as "Create Treatment Plan"
+    usecase RecTP as "Receive Treatment Plan"
+    usecase Presc as "Prescribe Medication"
+    usecase RecRX as "Receive Prescription"
+
+    Patient --> SchedApp
+    Patient --> CancelApp
+    Patient --> ViewAppSched
+    Patient --> ViewMR
+    Patient --> RecTP
+    Patient --> RecRX
+
+    Doctor --> SchedApp
+    Doctor --> CancelApp
+    Doctor --> ViewAppSched
+    Doctor --> ViewMR
+    Doctor --> UpdateMR
+    Doctor --> Hours
+    Doctor --> Diag
+    Doctor --> CreateTP
+    Doctor --> Presc
+
+    SchedApp ..> Auth : Use
+    SchedApp ..> ViewAppSched : Use
+    CancelApp ..> Auth : Use
+    CancelApp ..> SchedApp : Use
+    ViewAppSched ..> Auth : Use
+    ViewAppSched ..> Hours : Use
+    ViewMR ..> Auth : Use
+    UpdateMR ..> Auth : Use
+    UpdateMR ..> ViewMR : Use
+    UpdateMR ..> CreateTP : Use
+    RecTP ..> Auth : Use
+    RecTP ..> ViewMR : Use
+    RecRX ..> Auth : Use
+    RecRX ..> RecTP : Use
+    Diag ..> Auth : Use
+    Hours ..> Auth : Use
+    CreateTP ..> Presc : Use
+    CreateTP ..> Auth : Use
+    CreateTP ..> Diag : Use
+    Diag ..> SchedApp : Use
+    Presc ..> Auth : Use
+}
 @enduml
