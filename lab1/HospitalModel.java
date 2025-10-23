@@ -60,8 +60,16 @@ class Appointment {
 class Treatment {
     private int treatmentId; // PK
     private int recordId; // FK
+    private int diagnosisId; // FK
     private LocalDate date;
-    private String diagnosis;
+    private String description;
+}
+
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+class Diagnosis {
+    private int diagnosisId; // PK
+    private String code;
+    private String name;
     private String description;
 }
 

@@ -54,8 +54,16 @@ entity "Treatment" as treatment {
   * treatment_id : int <<PK>>
   --
   * record_id : int <<FK>>
+  * diagnosis_id : int <<FK>>
   date : LocalDate
-  diagnosis : String
+  description : String
+}
+
+entity "Diagnosis" as diagnosis {
+  * diagnosis_id : int <<PK>>
+  --
+  code : String
+  name : String
   description : String
 }
 
@@ -91,6 +99,7 @@ record ||--o{ treatment : "contains"
 
 doctor ||--o{ medical_team : "is part of"
 treatment ||--|{ medical_team : "is managed by"
+diagnosis ||--o{ treatment : "is basis for"
 
 treatment ||--o{ prescription : "includes"
 medication ||--o{ prescription : "is part of"
