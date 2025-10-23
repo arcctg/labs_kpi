@@ -16,6 +16,7 @@ rectangle "Hospital System" {
     usecase ViewAppSched as "View Appointment Schedule"
     usecase ViewSchedP as "View via Patient UI"
     usecase ViewSchedD as "View via Doctor UI"
+
     usecase Hours as "Provide Working Hours"
     usecase ViewMR as "View Medical Record"
     usecase ViewMRP as "View via Patient UI"
@@ -39,22 +40,24 @@ rectangle "Hospital System" {
     usecase Presc as "Prescribe Medication"
     usecase RecRX as "Receive Prescription"
 
-    Patient --> SchedApp
-    Patient --> CancelApp
-    Patient --> ViewAppSched
-    Patient --> ViewMR
+    Patient --> SchedP
+    Patient --> CancelP
+    Patient --> ViewSchedP
+    Patient --> ViewMRP
     Patient --> RecTP
     Patient --> RecRX
+    Patient --> AuthPatient
 
-    Doctor --> SchedApp
-    Doctor --> CancelApp
-    Doctor --> ViewAppSched
-    Doctor --> ViewMR
+    Doctor --> SchedD
+    Doctor --> CancelD
+    Doctor --> ViewSchedD
+    Doctor --> ViewMRD
     Doctor --> UpdateMR
     Doctor --> Hours
     Doctor --> Diag
     Doctor --> CreateTP
     Doctor --> Presc
+    Doctor --> AuthDoctor
 
     SchedApp ..> Auth : Use
     SchedApp ..> ViewAppSched : Use
