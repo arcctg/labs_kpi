@@ -1,26 +1,29 @@
 ### Functional Requirements
 
-| ID    | Requirement                                |
-| :---- |:-------------------------------------------|
-| FR1 | Appointment Schedule Management            |
-| FR2 | Electronic Medical Record (EMR) Management |
-| FR3 | Treatment Process Support                  |
-| FR4 | User Identification and Access Control     |
+| ID  | Requirement                                                                                                                                                              |
+|:----|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| FR1 | **User Authentication & Access Control:** The system must verify user identity (Patient, Doctor) and grant access to functionality based on their role.                  |
+| FR2 | **Schedule Creation:** The system must provide the capability to create new appointment records in the schedule.                                                         |
+| FR3 | **Schedule Modification/Cancellation:** The system must provide the capability to cancel existing appointment records.                                                   |
+| FR4 | **Schedule Data Visibility (Doctors):** The system must allow doctors to manage (create, publish) their working hours and view their own schedule.                       |
+| FR5 | **Schedule Data Visibility (Patients):** The system must allow patients to search/view available doctor slots and view their own appointment schedule.                   |
+| FR6 | **EMR Data Entry & Modification:** The system must allow authorized medical staff to create and update patient medical data (diagnoses, treatment plans, prescriptions). |
+| FR7 | **EMR Data Retrieval:** The system must provide secure read-only access to medical data (records, prescriptions, plans) for patients (own data only) and doctors.        |
 
 
 ### Use Cases
 
-| ID | Use Case                                 |
-| :--- |:-----------------------------------------|
-| UC1 | Cancel Appointment via Patient UI        |
-| UC2 | Cancel Appointment via Doctor UI         |
-| UC3 | Schedule Appointment via Patient UI      |
-| UC4 | Schedule Appointment via Doctor UI       |
-| UC5 | View Medical Record via Patient UI       |
-| UC6 | View Medical Record via Doctor UI        |
-| UC7 | Update Medical Record                    |
-| UC8 | Receive Treatment Plan                   |
-| UC9 | Create Treatment Plan                    |
+| ID   | Use Case                                 |
+|:-----|:-----------------------------------------|
+| UC1  | Cancel Appointment via Patient UI        |
+| UC2  | Cancel Appointment via Doctor UI         |
+| UC3  | Schedule Appointment via Patient UI      |
+| UC4  | Schedule Appointment via Doctor UI       |
+| UC5  | View Medical Record via Patient UI       |
+| UC6  | View Medical Record via Doctor UI        |
+| UC7  | Update Medical Record                    |
+| UC8  | Receive Treatment Plan                   |
+| UC9  | Create Treatment Plan                    |
 | UC10 | Receive Prescription                     |
 | UC11 | Diagnose Patient                         |
 | UC12 | Prescribe Medication                     |
@@ -35,10 +38,13 @@
 
 | **FR/UC** | UC1 | UC2 | UC3 | UC4 | UC5 | UC6 | UC7 | UC8 | UC9 | UC10 | UC11 | UC12 | UC13 | UC14 | UC15 | UC16 | UC17 |
 |:----------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
-| **FR1**   |  x  |  x  |  x  |  x  |     |     |     |     |     |      |      |      |  x   |      |      |  x   |  x   |
-| **FR2**   |     |     |     |     |  x  |  x  |  x  |     |     |      |      |      |      |      |      |      |      |
-| **FR3**   |  x  |  x  |  x  |  x  |  x  |  x  |  x  |  x  |  x  |  x   |  x   |  x   |      |      |      |  x   |  x   |
-| **FR4**   |     |     |     |     |     |     |     |     |     |      |      |      |      |  x   |  x   |      |      |
+| **FR1**   |  x  |  x  |  x  |  x  |  x  |  x  |  x  |  x  |  x  |  x   |  x   |  x   |  x   |  x   |  x   |  x   |  x   |
+| **FR2**   |     |     |  x  |  x  |     |     |     |     |  x  |      |  x   |  x   |      |      |      |  x   |  x   |
+| **FR3**   |  x  |  x  |  x  |  x  |     |     |     |     |     |      |      |      |      |      |      |      |      |
+| **FR4**   |  x  |  x  |  x  |  x  |     |     |     |     |  x  |      |  x   |  x   |  x   |      |      |  x   |  x   |
+| **FR5**   |  x  |     |  x  |     |     |     |     |     |  x  |      |  x   |  x   |      |      |      |  x   |      |
+| **FR6**   |     |     |     |     |  x  |  x  |  x  |  x  |  x  |  x   |  x   |  x   |      |      |      |      |      |
+| **FR7**   |     |     |     |     |  x  |  x  |  x  |  x  |  x  |  x   |  x   |  x   |      |      |      |      |      |
 
 
 ### Non-Functional Requirements
