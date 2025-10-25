@@ -1,0 +1,67 @@
+@startuml
+title Sequence Diagram: Patient Schedules Appointment
+
+skinparam sequenceActorStyle stickman
+skinparam sequenceReferenceBackgroundColor #EFEFEF
+skinparam sequenceArrowThickness 2
+skinparam sequenceParticipant borderThickness 1.5
+
+actor "Patient" as Patient
+participant "EMR_System" as System <<Gateway>>
+participant "ScheduleService" as SchedSvc <<Service>>
+participant "AppointmentService" as ApptSvc <<Service>>
+database "Database" as DB
+
+activate Patient
+
+Patient -> System: searchAvailableSlots(criteria)
+    activate System
+    System -> SchedSvc: getAvailableSlots(criteria)
+        activate SchedSvc
+
+        SchedSvc -> DB: SELECT doctor_id, schedule FROM Doctor WHERE ...
+            activate DB
+            DB --> SchedSvc: doctorSchedules
+            deactivate DB
+
+        SchedSvc -> DB: SELECT doctor_id, date FROM Appointment WHERE status='Scheduled'
+            activate DB
+            DB --> SchedSvc: existingAppointments
+            deactivate DB
+
+        SchedSvc --> System: availableSlotsList
+        deactivate SchedSvc
+
+    System --> Patient: displayAvailableSlots(list)
+    deactivate System
+
+Patient -> System: bookAppointment(slotId, patientId, reason)
+    activate System
+    System -> ApptSvc: createAppointment(slotId, patientId, reason)
+        activate ApptSvc
+
+        alt Slot is still available (Optimistic Lock)
+
+            ApptSvc -> DB: INSERT INTO Appointment (patient_id, doctor_id, date, status, reason) VALUES (...)
+                activate DB
+                DB --> ApptSvc: newAppointmentId
+                deactivate DB
+
+            ApptSvc --> System: bookingConfirmation(newAppointmentId)
+
+        else Slot was just taken (Race Condition)
+
+            ApptSvc --> System: bookingFailure("This slot is no longer available")
+
+        end
+
+        deactivate ApptSvc
+
+    System --> Patient: (handleBookingResponse)
+    deactivate System
+
+deactivate Patient
+
+destroy System
+
+@enduml

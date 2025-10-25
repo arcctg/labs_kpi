@@ -1,0 +1,49 @@
+@startuml
+title Sequence Diagram: Doctor Authentication
+
+skinparam sequenceActorStyle stickman
+skinparam sequenceReferenceBackgroundColor #EFEFEF
+skinparam sequenceArrowThickness 2
+skinparam sequenceParticipant borderThickness 1.5
+
+actor "Doctor" as Doctor
+participant "EMR_System" as System <<Gateway>>
+participant "AuthService" as AuthSvc <<Service>>
+participant "TokenService" as TokenSvc <<Service>>
+database "Database" as DB
+
+activate Doctor
+
+Doctor -> System: login(username, password)
+    activate System
+    System -> AuthSvc: verifyCredentials(username, password)
+        activate AuthSvc
+        AuthSvc -> DB: getAuthData(username)
+            activate DB
+            DB --> AuthSvc: {doctor_id, hashed_password, role}
+            deactivate DB
+
+        alt Credentials Valid (e.g., bcrypt.compare == true)
+
+            AuthSvc -> TokenSvc: generateTokens(doctor_id, role)
+                activate TokenSvc
+                TokenSvc --> AuthSvc: {accessToken, refreshToken}
+                deactivate TokenSvc
+            AuthSvc --> System: authSuccess({tokens, role})
+
+        else Credentials Invalid
+
+            AuthSvc --> System: authFailure("Invalid username or password")
+
+        end
+
+        deactivate AuthSvc
+
+    System --> Doctor: (handleAuthResponse)
+    deactivate System
+
+deactivate Doctor
+
+destroy System
+
+@enduml
