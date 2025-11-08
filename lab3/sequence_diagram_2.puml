@@ -44,6 +44,6 @@ Doctor -> System: login(username, password)
 
 deactivate Doctor
 
-destroy System
+destroy Doctor
 
 @enduml

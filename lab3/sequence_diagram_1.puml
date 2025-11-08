@@ -96,6 +96,6 @@ Doctor -> System: completeAppointment(apptId)
 
 deactivate Doctor
 
-destroy System
+destroy Doctor
 
 @enduml

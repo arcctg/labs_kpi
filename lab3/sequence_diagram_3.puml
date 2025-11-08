@@ -62,6 +62,6 @@ Patient -> System: bookAppointment(slotId, patientId, reason)
 
 deactivate Patient
 
-destroy System
+destroy Patient
 
 @enduml
