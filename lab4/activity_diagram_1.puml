@@ -1,5 +1,53 @@
 @startuml
-title Activity Diagram
+title Activity Diagram: Conduction of an Appointment
 
+skinparam activityDiamondBackgroundColor #EFEFEF
+skinparam activityBackgroundColor #F5F5F5
+skinparam activityBorderColor #333333
+skinparam activityBorderThickness 1.5
+skinparam activityArrowThickness 2
+
+|Doctor|
+start
+:Start appointment;
+
+|EMR System|
+:Get appointment details;
+:Retrieve medical history;
+:Display appointment data;
+
+|Doctor|
+:Review patient information;
+
+if (Diagnosis required?) then (yes)
+  :Enter symptoms and diagnosis;
+
+  |EMR System|
+  :Create diagnosis record;
+  :Create treatment record;
+  :Display diagnosis confirmation;
+
+  |Doctor|
+  if (Prescription needed?) then (yes)
+    :Enter medication information;
+
+    |EMR System|
+    :Lookup medication;
+    :Create prescription;
+    :Display prescription confirmation;
+
+    |Doctor|
+  else (no)
+  endif
+else (no)
+endif
+
+:Mark appointment as complete;
+
+|EMR System|
+:Update appointment status;
+:Display completion confirmation;
+
+stop
 
 @enduml

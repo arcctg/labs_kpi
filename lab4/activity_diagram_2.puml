@@ -1,0 +1,35 @@
+@startuml
+title Activity Diagram: Doctor Authentication
+
+skinparam activityDiamondBackgroundColor #EFEFEF
+skinparam activityBackgroundColor #F5F5F5
+skinparam activityBorderColor #333333
+skinparam activityBorderThickness 1.5
+skinparam activityArrowThickness 2
+
+|Doctor|
+start
+:Enter username
+and password;
+:Submit login;
+
+|System|
+:Verify credentials;
+
+if (Credentials valid?) then (yes)
+  :Generate session;
+  :Return success;
+
+  |Doctor|
+  :Access granted;
+else (no)
+  |System|
+  :Return error;
+
+  |Doctor|
+  :See error message;
+endif
+|System|
+stop
+
+@enduml

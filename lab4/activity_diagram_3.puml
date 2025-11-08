@@ -1,0 +1,51 @@
+@startuml
+title Activity Diagram: Patient Schedules Appointment
+
+skinparam activityDiamondBackgroundColor #EFEFEF
+skinparam activityBackgroundColor #F5F5F5
+skinparam activityBorderColor #333333
+skinparam activityBorderThickness 1.5
+skinparam activityArrowThickness 2
+
+|Patient|
+start
+:Enter search criteria
+(specialty, date, doctor);
+:Submit search;
+
+|System|
+:Calculate available slots;
+:Display available slots;
+
+|Patient|
+:Review slots;
+:Select preferred slot;
+:Enter appointment reason;
+:Submit booking;
+
+|System|
+:Validate slot availability;
+
+if (Slot still available?) then (yes)
+  :Create appointment;
+  :Send confirmation;
+
+  |Patient|
+  :Receive confirmation;
+else (no)
+  |System|
+  :Return error;
+
+  |Patient|
+  :See "Slot unavailable";
+
+  if (Try again?) then (yes)
+    :Enter search criteria
+    (specialty, date, doctor);
+  else (no)
+  endif
+endif
+|System|
+Stop
+
+@enduml
