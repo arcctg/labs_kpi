@@ -39,11 +39,6 @@ else (no)
   |Patient|
   :See "Slot unavailable";
 
-  if (Try again?) then (yes)
-    :Enter search criteria
-    (specialty, date, doctor);
-  else (no)
-  endif
 endif
 |System|
 Stop
